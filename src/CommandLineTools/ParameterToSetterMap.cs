@@ -8,7 +8,7 @@ namespace CommandLineTools
         public Action<string> Setter { get; set; }
         public string TypeName { get; set; }
         public string HelpMessage { get; set; }
-
+        public string DefaultValue { get; set; }
 
         public void MatchAndSetParameter(string[] args)
         {
@@ -23,7 +23,8 @@ namespace CommandLineTools
 
                 if (param[0] == ParameterName)
                 {
-                    Setter(param[1]);
+                    var value = param.Length == 1 ? DefaultValue : param[1];
+                    Setter(value);
                     return;
                 }   
             }

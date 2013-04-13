@@ -33,7 +33,7 @@ namespace CommandLineTools.Test
     {
         [DefaultArgument]
         public string AString { get; set; }
-        [NamedArgument("arg", "A general argument")]
+        [Argument("arg", "A general argument")]
         public string AProp { get; set; }
     }
 }

@@ -22,17 +22,41 @@ namespace CommandLineTools.Test
             var target = Parse.Args<IntTarget>(args);
             Assert.Equal(1, target.AProp);
         }
+        [Fact]
+        public void ArgumentMapsToBoolProperty()
+        {
+            var args = new[] { "/arg:true" };
+            var target = Parse.Args<BoolTarget>(args);
+            Assert.Equal(true, target.AProp);
+        }
+        [Fact]
+        public void ValuelessArgumentMapsToBoolProperty()
+        {
+            var args = new[] { "/arg" };
+            var target = Parse.Args<ValuelessTarget>(args);
+            Assert.Equal(true, target.AProp);
+        }
+
     }
 
     public class ArgTarget
     {
-        [NamedArgument("arg")]
+        [Argument("arg")]
         public string AProp { get; set; }
     }
     public class IntTarget
     {
-        [NamedArgument("arg")]
+        [Argument("arg")]
         public int AProp { get; set; }
 
+    }
+    public class BoolTarget {
+        [Argument("arg")]
+        public bool AProp{get;set;}
+    }
+    public class ValuelessTarget
+    {
+        [Argument("arg","","true")]
+        public bool AProp { get; set; }
     }
 }

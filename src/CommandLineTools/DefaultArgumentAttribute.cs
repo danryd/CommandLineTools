@@ -6,7 +6,7 @@ using System.Text;
 namespace CommandLineTools
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class DefaultArgumentAttribute :NamedArgumentAttribute
+    public class DefaultArgumentAttribute :ArgumentAttribute
     {
         public DefaultArgumentAttribute(string description = "") : base("Default",description)
         {

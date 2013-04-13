@@ -12,8 +12,8 @@ namespace CommandLineTools
 
         static ArgumentFinder()
         {
-            attributesInAssembly = typeof(ArgumentFinder).Assembly.GetTypes().Where(t => t == typeof(NamedArgumentAttribute)
-             || t.BaseType == typeof(NamedArgumentAttribute)).ToArray();
+            attributesInAssembly = typeof(ArgumentFinder).Assembly.GetTypes().Where(t => t == typeof(ArgumentAttribute)
+             || t.BaseType == typeof(ArgumentAttribute)).ToArray();
         }
 
         public IEnumerable<ParameterToSetterMap> GetParameterSettersFor(object o)
@@ -23,10 +23,10 @@ namespace CommandLineTools
                 if (property.HasAttribute(attributesInAssembly))
                 {
                     var first =
-                       (NamedArgumentAttribute)property.GetCustomAttributes(false).First(a => attributesInAssembly.Contains(a.GetType()));
+                       (ArgumentAttribute)property.GetCustomAttributes(false).First(a => attributesInAssembly.Contains(a.GetType()));
                     var setter = GetSetMethod(property, o);
                     yield return
-                      new ParameterToSetterMap { ParameterName = first.ParameterName, HelpMessage = first.Description, TypeName = property.GetGetMethod(true).ReturnType.Name, Setter = setter };
+                      new ParameterToSetterMap { ParameterName = first.ParameterName, DefaultValue = first.DefaultValue, HelpMessage = first.Description, TypeName = property.GetGetMethod(true).ReturnType.Name, Setter = setter };
                 }
             }
         }
@@ -41,21 +41,9 @@ namespace CommandLineTools
         private readonly IDictionary<Type, Func<string, object>> typeParser = new Dictionary<Type, Func<string, object>>
                                                          {
                                                              {typeof(string), s=> s},
-                                                             {typeof(int), s=>int.Parse(s)}
+                                                             {typeof(int), s=>int.Parse(s)},
+                                                             {typeof(bool), s=>bool.Parse(s)}
                                                          };
 
     }
-}
-
-namespace System.Reflection
-{
-    public static class PropertyExtensions
-    {
-        public static bool HasAttribute(this PropertyInfo property, Type[] attributeTypes)
-        {
-            var attributes = property.GetCustomAttributes(false);
-            return attributes.Any(a => attributeTypes.Contains(a.GetType()));
-        }
-    }
-
 }
