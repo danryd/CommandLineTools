@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="ApiTest.cs" />
     <Compile Include="DefaultArgumentAttributeTest.cs" />
-    <Compile Include="NamedArgumentAttributeTest.cs" />
+    <Compile Include="ArgumentAttributeTest.cs" />
     <Compile Include="ParamToSetterMapTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,7 +6,7 @@ using Xunit;
 
 namespace CommandLineTools.Test
 {
-    public class NamedArgumentAttributeTest
+    public class ArgumentAttributeTest
     {
         [Fact]
         public void ArgumentMapsToProperty()
